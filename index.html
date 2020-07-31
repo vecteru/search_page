@@ -1,0 +1,866 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>简单搜索</title>
+	<link id="link" rel="shortcut icon" href="" type="image/x-icon" />
+	<style type="text/css">
+		html,
+		body {
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			background: black;
+		}
+
+		.content {
+			text-align: center;
+			position: relative;
+			top: 50%;
+			transform: translateY(-50%);
+			vertical-align: middle;
+			/* //width: 300px;
+			//height: 300px;
+			//background: orange;
+			//margin: 0 auto; //水平居中
+			//.divcss5-a{margin:10px 0};
+			//height:36px;
+			//margin-top: -72px;  */
+		}
+
+		#bigclear {
+			height: 30%;
+			width: 600px;
+			font-size: 22px;
+			text-align: center;
+			position: fixed;
+			top: 10%;
+			left:50%;
+			transform: translateX(-50%);
+			/* position: absolute;
+			left: 450px;
+			top: 80px; */
+			font-family: auto;
+			line-height: 40px;
+			font-size: 40px;
+			background-color: transparent;
+			color: transparent;
+		}
+
+		#bigclear:hover {
+			background-color: rgba(0, 0, 255, 0.1) !important;
+			color: rgba(255, 192, 203, 0.2);
+		}
+
+		#input {
+			height: 36px;
+			width: 600px;
+			font-size: 22px;
+			text-align: center;
+			margin: 5px 1px;
+			font-family: auto;
+			vertical-align: middle;
+			line-height: 36px;
+			/* display: table-cell;//导致edge浏览器上输入框居左 */
+		}
+
+		button {
+			height: 36px;
+			font-size: 22px;
+			color: blue;
+			margin: 2px 0.5px;
+			cursor: pointer;
+			transition: all 0.30s ease-in-out;
+			border: 1px solid;
+			vertical-align: middle;
+		}
+
+		button:focus {
+			border: 3px solid blue;
+			box-shadow: 0 0 15px white;
+			outline: none;
+		}
+
+		button:hover {
+			background-color: #00BFFF !important;
+		}
+
+		text {
+			height: 36px;
+			font-size: 18px;
+			color: blue;
+			margin: 2px 0.5px;
+			border: 1px solid blue;
+			vertical-align: middle;
+		}
+
+		.divleft {
+			position: fixed;
+			left: 2%;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		.bt1 {
+			line-height: 32px;
+		}
+
+		.bt2 {
+			height: 26px;
+			width: 98px;
+			font-size: 16px;
+			color: blue;
+			margin: 2px 0.5px;
+			cursor: pointer;
+			transition: all 0.30s ease-in-out;
+			border: 1px solid;
+			vertical-align: middle;
+		}
+
+		.bt2:focus {
+			border: 3px solid blue;
+			box-shadow: 0 0 5px white;
+			outline: none;
+		}
+
+		.bt2:hover {
+			background-color: #00BFFF !important;
+		}
+
+		#showjs {
+			position: absolute;
+			left: 30px;
+			top: 30px
+		}
+
+		#timeline {
+			height: 36px;
+			font-size: 16px;
+			border: 0px solid;
+			background: transparent;
+			color: white;
+			font-weight: lighter;
+		}
+
+		#showfire {
+			height: 36px;
+			font-size: 18px;
+			color: #FF8C00;
+			border: 0px;
+		}
+
+		#leftbt {
+			height: 36px;
+			font-size: 22px;
+			color: #00ffff;
+			background:transparent;
+			margin: 2px 0.5px;
+			cursor: pointer;
+			transition: none;
+			border: 1px solid;
+			vertical-align: middle;
+		}
+
+		.dr{
+		opacity: 0;      /*实先规定文字的状态是不显示的*/
+    animation: fade-in 4s ease 0s 1;    /*调用名称为fade-in的动画，全程动画显示时间4S，进入方式为ease，延时0S进入，播放次数1次*/
+    -webkit-animation: fade-in 4s ease 0s 1;
+    -moz-animation: fade-in 4s ease 0s 1;
+    -o-animation: fade-in 4s ease 0s 1;
+    -ms-animation: fade-in 4s ease 0s 1;
+		}
+
+	</style>
+</head>
+
+<body onKeyDown="ifKeyDown()" onkeyup="ifKeyUp()">
+	<button id="bigclear" onclick="clearInput()">清空输入</button>
+	<div class="content">
+		<button id="duohang" onclick="clearInput()" onmouseover="this.innerHTML='点击清空输入框'"
+			onmouseout="this.innerHTML='当前为多行输入'" style="color:red;font-size:18px;display:none">当前为多行输入</button>
+		<br id="duohangbr" style="display:none">
+		<button id="leftbt" style="display:none;" onclick="this.style.color=(function (rgbColor){if (rgbColor.indexOf('rgb') > -1) {var arrRGB =[,,,];var colorReg = /\s*\d+,\s*\d+,\s*\d+/i; var t = colorReg.exec(rgbColor)[0].split(','); console.log(t); for (var i = 0; i < arrRGB.length; i++) { arrRGB[i] = 255 - t[i]; } return 'rgb(' + arrRGB.join(',') + ')';}else{return rgbColor;}})(this.style.color);"></button>
+		<span><textarea id="input" type="text" placeholder="输入内容" onkeyup="ifduohang()" autofocus></textarea>
+			<button class="bt1" id="bing" onclick="sousuo(this.id)" style="background:#0C8484;color:white">必应</button>
+		</span>
+		<br>
+		<button class="bt1" id="sougou" onclick="sousuo(this.id)"
+			style="background:transparent;color:#FF7F00">搜狗</button>
+		<button class="bt1" id="miji" onclick="sousuo(this.id)" style="background:transparent;color:white">秘迹</button>
+		<button class="bt1" id="Magi" onclick="sousuo(this.id)" style="background:black;color:#40AE36">Magi</button>
+		<button class="bt1" id="google2" onclick="sousuo(this.id)" style="background:white">
+			<span style="color:red">谷</span><span style="color:#fbcc05">歌</span><span style="color:green">镜</span><span
+				style="color:blue">像</span>
+		</button>
+		<button class="bt1" id="wiki2zh" onclick="sousuo(this.id)" style="background:white;color:black">
+			<span>维基镜像</span><span style="font-size:18px;color:blue">中</span>
+		</button>
+		<button class="bt1" id="wiki2en" onclick="sousuo(this.id)" style="background:white;color:black">
+			<span>维基镜像</span><span style="font-size:18px;color:blue">英</span>
+		</button>
+		<button class="bt1" id="baidu" onclick="if(firm()){sousuo(this.id);}"
+			style="background-color:white;color:blue;line-height:22px;height:26px;font-size:18px;">百度</button>
+		<br>
+		<button class="bt1" id="bdfanyi" onclick="regfy('bdfanyi')"
+			style="background-color:#3485fb;color:white;display:none;">百度翻译</button>
+		<button class="bt1" id="ggfanyi" onclick="regfy('ggfanyi')" style="background-color:#FAFAFA;">
+			<span style="color:#4A8AF4">谷歌</span><span style="color:#878787">翻译</span>
+		</button>
+		<button class="bt1" id="zhihu" onclick="sousuo(this.id)"
+			style="background-color:#178be9;color:white">知乎</button>
+		<button class="bt1" id="bili" onclick="sousuo(this.id)"
+			style="background-color:transparent;color:#00A1D6">B站</button>
+		<button class="bt1" id="github" onclick="sousuo(this.id)"
+			style="background-color:black;color:white">Github</button>
+		<button class="bt1" id="stackoverflow" onclick="sousuo(this.id)"
+			style="background-color:transparent;color:#F48024;font-size:18px">StackOverflow</button>
+		<button class="bt1" id="wolframalpha" onclick="sousuo(this.id)"
+			style="background-color:transparent;color:#FF6C00;font-size:18px">WolframAlpha</button>
+		<!--<button class="bt1" id="duanluo" onclick="changeReg()" style="background-color:#878787;color:blue">
+<span style="color:white">段落</span><span>翻译</span>-->
+		<!--  <button class="bt1" id="shuqian" onclick="sousuo(this.id)" style="background-color:transparent;color:#127FF2">
+本地书签
+</button> 无法用window打开书签管理。  -->
+		<br id="fqbr" style="display:none">
+		<button class="bt1" id="google" onclick="sousuo(this.id)" style="background:white;display:none;"><span
+				style="color:#4285F4">谷</span><span style="color:#FBBC05">歌</span></button>
+		<button class="bt1" id="wikizh" onclick="sousuo(this.id)" style="background:white;color:black;display:none;">
+			<span>维基</span><span style="font-size:18px;color:blue">中文</span></button>
+		<button class="bt1" id="wikien" onclick="sousuo(this.id)" style="background:white;color:black;display:none;">
+			<span>维基</span><span style="font-size:18px;color:blue">英文</span></button>
+		<button class="bt1" id="GoogleScholar" onclick="sousuo(this.id)"
+			style="background:white;color:#356AC3;display:none;">谷歌学术</button>
+		<button class="bt1" id="zhiwang" onclick="sousuo(this.id)"
+			style="background:#5891ED;color:black;display:none;">知网</button>
+		<button class="bt1" id="youtube" onclick="sousuo(this.id)"
+			style="background:white;color:red;display:none;">YouTube</button>
+		<br id="regfybr" style="display:none">
+		<!-- <button class="bt1" id="regggfanyi" onclick="regfy('ggfanyi')"
+			style="height:32px;background-color:#FAFAFA;color:gray;font-size:18px;display:none;">段落
+			<span style="color:#4A8AF4">谷歌</span><span style="color:#878787">翻译</span>
+		</button> -->
+		<button class="bt1" id="regbdfanyi" onclick="regfy('bdfanyi')"
+			style="height:32px;background-color:#3485fb;color:white;font-size:18px;display:none;">
+			百度翻译
+		</button>
+		<button class="bt1" id="bingfy" onclick="regfy('bingfy')"
+			style="background:green;color:white;display:none;">必应翻译</button>
+		<button class="bt1" id="youdao" onclick="sousuo(this.id)"
+			style="background:#E02433;color:white;display:none;">有道翻译</button>
+		<button class="bt1" id="caiyun" onclick="sousuo(this.id)"
+			style="background:#56B084;color:white;display:none;">彩云小译</button>
+		<br>
+	</div>
+
+	<div class="divleft" id="divleft" style="background-color:transparent;color:blue;" onmouseover="$('in_div').style.visibility='visible'"
+	onmouseout="$('in_div').style.visibility='hidden'">
+		<div id="in_div" style="visibility:hidden">
+		<button class="bt2" id="littlegj" onclick="changedivcolor()">小工具</button><br>
+		<button class="bt2" id="regexr-cn" onclick="window.open('https://regexr.com/');"
+			style="background:#2F3335;color:#D4D4D9;">正则测试</button>
+		<!--该网址为中文版本https://regexr-cn.com/，列表功能无法使用。英文版无法访问(2020-4-3)：https://regexr.com/。英文Github网址：https://github.com/gskinner/regexr/。已修改，目前英文版又可以访问(2020-4-6)。-->
+		<button class="bt2" id="netcut"
+		onclick="window.open('http://netcut.cn/');"
+		style="background:#1779BA;color:white;">网络剪贴板</button><br>
+		<button class="bt2" id="runjs"
+			onclick="window.open('https://www.runoob.com/try/try.php?filename=tryjs_events');"
+			style="background:#91C951;color:black;">运行js</button>
+			<!-- 曾经字体颜色#2D4B59 -->
+		<button class="bt2" id="seeLaTeX"
+			onclick="window.open('http://kuing.orzweb.net/viewthread.php?tid=6&extra=page%3D1');"
+			style="background:#669900;color:white;">LaTeX预览</button><br>
+		<!-- <button class="bt2" id="jsformat" onclick="window.open('http://tool.chinaz.com/tools/jsformat.aspx');"
+			style="background:#2361AD;color:#FDD000;">js格式化</button><br> -->
+		<!--<button class="bt2" id="wikijs" onmouseover="$('showjs').value=showtext[this.id];$('showjs').style.display='';$('showjsbr').style.display=''" onmouseout="$('showjs').style.display='none';$('showjsbr').style.display='none'" onclick="copyjs(this.id)" style="background:black;color:#87CEEB;">
+<span>复制维基命令</span>
+</button><br>-->
+		<button class="bt2" id="jiumo" onclick="window.open('https://www.jiumodiary.com/');"
+			style="background:#7E5C38;color:white;">鸠摩搜索</button>
+		<button class="bt2" id="erweima" onclick="window.open('https://jiema.wwei.cn/');"
+			style="background:#2CC060;color:white;">二维码识别</button><br>
+		<!-- <button class="bt2" id="editjs"
+			onmouseover="$('showjs').value=showtext[this.id];$('showjs').style.display='';$('showjsbr').style.display=''"
+			onmouseout="$('showjs').style.display='none';$('showjsbr').style.display='none'" onclick="copyjs(this.id)"
+			style="background:black;color:#00BFFF;">
+			<span>复制编辑</span>
+		</button>
+		<button class="bt2" id="copyok" onclick="" style="background-color:white;color:blue;display:none">复制成功</button>
+		<br>暂时隐藏，再次加入时实现多文字，文本框适应大小 -->
+		<button class="bt2" id="randnum" onclick="$('input').value=randnum(10)"
+			style="background:black;color:#00FFFF;">随机数</button>
+		<button class="bt2" id="randstr" onclick="$('input').value=randomString(16)"
+			style="background:black;color:#00FF00;">随机字符串</button><br>
+		<button class="bt2" id="showtime" onclick="showTime()" style="background:black;color:#FFA500;">显示时间</button>
+		<button class="bt2" id="showother" onclick="showother()"
+			style="background:black;color:rgb(0, 119, 255);">展开其他</button><br>
+		<button class="bt2" id="clear" onclick="clearInputAll();"
+			style="background:black;color:white;">清空输入</button><br>
+		</div>
+	</div>
+
+	<textarea id="showjs" spellcheck="false"
+		style="font-size:12px;height:80px;width:400px;display:none;text-align:left">
+var imgs = document.getElementsByTagName('img');
+for(var i = 0 ; i < imgs.length ; i ++){ 
+    imgs[i].src=imgs[i].src.replace(/https:\/\/wikimedia.org\//, "http:\/\/en.wikii.cc\/")
+}
+</textarea>
+	<br id="showjsbr" style="display:none">
+
+	<script>
+		//搜索引擎颜色：白中蓝，绿白，灰白，白彩(红黄绿蓝)，白黑
+		//网站logo查看：favicon.ico
+		//qw:engines
+		// 失效 "google2":["http://www.gkoso.com.cn/search?ie=utf8&hl=zh-CN&source=hp&biw=&bih=&q=","&btnG=Google+%CB%D1%CB%F7"],
+		// "wiki2zh":["https://www.wikii.cc/w/index.php?sort=relevance&search=","&title=Special:%E6%90%9C%E7%B4%A2&profile=advanced&fulltext=1&advancedSearch-current=%7B%7D&ns0=1"],
+		// "wiki2en":["http://en.bosimedia.com/w/index.php?cirrusUserTesting=glent_m0&sort=relevance&search=","&title=Special:Search&profile=advanced&fulltext=1&advancedSearch-current=%7B%7D&ns0=1"],
+		"use strict";
+		var engines={
+			"baidu":["https://www.baidu.com/s?ie=utf8&oe=utf8&tn=98010089_dg&ch=11&wd=",""],
+			"miji":["https://mijisou.com/?q=","&category_general=on&time_range=&language=zh-CN&pageno=1"],
+			"bing":["https://cn.bing.com/search?q=",""],
+			"google2":["https://chacha.design/search?q=",""],
+			"wiki2zh":["https://zh.jinzhao.wiki/w/index.php?search=",""],
+			"wiki2en":["https://en.jinzhao.wiki/w/index.php?search=",""],
+			"bdfanyi":["https://fanyi.baidu.com/?aldtype=16047#en/zh/",""],
+			"zhihu":["https://www.zhihu.com/search?type=content&q=",""],
+			"sougou":["https://www.sogou.com/web?query=","&_asf=www.sogou.com&p=40040100"],
+			"bili":["https://search.bilibili.com/all?keyword=",""],
+			"ggfanyi":["https://translate.google.cn/#view=home&op=translate&sl=en&tl=zh-CN&text=",""],
+			"github":["https://github.com/search?q=",""],
+			"stackoverflow":["https://stackoverflow.com/search?q=",""],
+			"shuqian":["qqbrowser://bookmarks/#q=",""],
+			"Magi":["https://magi.com/search?q=",""],
+			"bingfy":["https://cn.bing.com/translator?ref=TThis&from=en&to=zh-Hans&text=",""],
+			"youdao":["http://fanyi.youdao.com/#",""],
+			"google":["https://www.google.com/search?q=",""],
+			"wikien":["https://en.wikipedia.org/wiki/w/index.php?sort=relevance&search=",""],
+			"wikizh":["https://zh.wikipedia.org/wiki/w/index.php?sort=relevance&search=",""],
+			"GoogleScholar":["https://scholar.google.com.hk/scholar?q=",""],
+			"wolframalpha":["https://www.wolframalpha.com/input/?i=",""],
+			"youtube":["https://www.youtube.com/results?search_query=",""],
+			"zhiwang":["https://www.cnki.net/#",""],
+			"caiyun":["https://fanyi.caiyunapp.com/#/",""],
+		}
+		var buttonInfo={
+			"baidu": ["bd",0,"",11],
+			"miji": ["mj",0,"",13],
+			"bing": ["by",0,"",10],
+			"google2": ["jgg",0,"",15],
+			"wiki2zh": ["jwkz",0,"",16],
+			"wiki2en": ["jwke",0,"",17],
+			"zhihu": ["zh",0,"",22],
+			"sougou": ["sg",0,"",12],
+			"bili": ["bl",0,"",23],
+			"ggfanyi": ["ygg",0,"",21],
+			"github": ["gh",0,"",24],
+			"stackoverflow": ["sf",0,"",25],
+			"Magi": ["mg",0,"",14],
+			"bingfy": ["yby",0,"",42],
+			"youdao": ["yd",0,"",43],
+			"google": ["gg",0,"",31],
+			"wikien": ["wke",0,"",32],
+			"wikizh": ["wkz",0,"",33],
+			"GoogleScholar": ["xgg",0,"",34],
+			"wolframalpha": ["wf",0,"",26],
+			"youtube": ["yt",0,"",36],
+			"zhiwang": ["zw",0,"",35],
+			"regbdfanyi":["ybd",0,"",41],
+			"caiyun":["cy",0,"",44],
+			"showtime":["t",0,"",53],
+			"showother":["zk",0,"",54],
+			"clear":["qk",0,"",55],
+		}
+		var showtext = {
+			"wikijs": "var imgs = document.getElementsByTagName('img');\nfor(var i = 0 ; i < imgs.length ; i ++){ \n    imgs[i].src=imgs[i].src.replace(/https:\\/\\/wikimedia.org\\//, \"http:\\/\\/en.wikii.cc\\/\")\n}\n",
+			"editjs": "document.body.contentEditable=!0",
+		}
+		var loc = window.document.location.href;
+		if (loc.indexOf("file") == 0 && loc.indexOf('search') > 0) {
+			//是本地文件并且路径含有search(搜索)
+			$('link').href = "quantum01.jpg";
+		} else {
+			$('link').href =
+				"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585827751837&di=6a149bd4fb7085b5bc9cef9abea57eee&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F00%2F42%2F30%2F7056d65e3959f5d.jpg"; //绿色箭头logo
+		}
+		for (var buttonid in buttonInfo) {
+			buttonInfo[buttonid][1] = 0;
+			buttonInfo[buttonid][2] = $(buttonid).innerHTML;
+			buttonInfo[buttonid][3] += "";
+			buttonInfo[buttonid][4] = 0;
+		}
+		function $(s) {
+			return document.getElementById(s) ? document.getElementById(s) : s;
+		}
+		var DB = document.body.innerHTML;
+		var space = 0;
+		var setIntervalFun = null;
+		var timeReg = /^\d{4}\/\d+\/\d+.+\d+:\d{2}:\d{2}$/g;
+		document.body.ondblclick = function () {
+			if (page == 0 && document.activeElement.toString().indexOf('TextArea') == -1) {
+				moveEnd($("input"));
+			}
+		};
+		var page = 0; //当前页面，可选值012
+		var accumulate = 0;
+		var rightKey = {
+			1: [48, 96],
+			0: [1, 4, 2, 8, 5, 7]
+		};
+		var lockhtml =
+			"<div class='content' ><text id='showfire' style='display:none'></text><br id='firebr' style='display:none'><button id='timeline' ondblclick='this.style.display=\"none\"'>test</button> </div>";
+		var altActive = -1;
+		var ctrlActive = -1;
+		var matchstr = -1;
+		var setclearEnd=null;
+		var ctrlDown=0;
+		var ctrlUsed=0;
+        var clearEnd = function () {
+            altActive = -1;
+            ctrlActive = -1;
+            $('leftbt').style.display='none';
+            $("input").focus();
+            for (var buttonid in buttonInfo) {
+                $(buttonid).innerHTML = buttonInfo[buttonid][2];
+                buttonInfo[buttonid][1] = 0;
+            }
+        }; //清除增加的后缀
+
+		function ifKeyDown() {
+			if (page == 0) {
+				if (event.keyCode == 13) {
+					var activeStr = document.activeElement.toString();
+					if (activeStr.indexOf('Body') != -1 || activeStr.indexOf('TextArea') != -1) {
+						//之前写的if (!(document.activeElement.id in engines))
+						//当输入框或者body(非按钮)激活时用bing
+						$("bing").click();
+						event.returnValue = false; //不输出回车,会导致其他按钮点不了，因此应该放这
+					}
+				}
+				if (event.altKey == 1) {
+					if (altActive < 0) {
+						altActive = 0;
+						$('leftbt').style.display='';
+						$('leftbt').focus();
+						$('leftbt').innerHTML='alt';
+						$('leftbt').style.color='#00ffff';
+						for (var buttonid in buttonInfo) {
+							if (buttonInfo[buttonid][0])
+								$(buttonid).innerHTML = buttonInfo[buttonid][2] + "<sup>" + buttonInfo[buttonid][0] + "</sup>";
+						} //增加后缀
+						setclearEnd = setTimeout(clearEnd, 5000);
+					} else {
+						clearTimeout(setclearEnd);
+						clearEnd();
+					}
+				}
+				//统计输入
+				else if (altActive >= 0) {
+					var keyLetter = '*',
+						altadd = 0;
+					if (event.keyCode>=65&&event.keyCode<=90) keyLetter=String.fromCharCode(event.keyCode + 32);
+					$('leftbt').innerHTML += "<sup>" + keyLetter + "</sup>";
+					for (var buttonid in buttonInfo) {
+						if (buttonInfo[buttonid][0] && buttonInfo[buttonid][0].length > 0) {
+							if (buttonInfo[buttonid][1] == altActive && buttonInfo[buttonid][0].slice(altActive, altActive + 1) ==
+								keyLetter) {
+								buttonInfo[buttonid][1] += 1;
+								altadd = 1;
+								var egstr = buttonInfo[buttonid][0],
+									egget = buttonInfo[buttonid][1];
+								$(buttonid).innerHTML = buttonInfo[buttonid][2] + "<sup>" + "<b>" + egstr.slice(0, egget) + "</b>" +
+									egstr.slice(egget) + "</sup>";
+							} else {
+								buttonInfo[buttonid][1] = 0;
+								$(buttonid).innerHTML = buttonInfo[buttonid][2] + "<sup>" + buttonInfo[buttonid][0] + "</sup>";
+							}
+							if (buttonInfo[buttonid][1] == buttonInfo[buttonid][0].length) {
+								var buttonok = buttonid;
+								setTimeout(() => {
+									$(buttonok).click();
+									clearTimeout(setclearEnd);
+									clearEnd();
+									for (var eg in buttonInfo) {
+										buttonInfo[eg][1] = 0;
+									}
+								}, 100);
+								//return;
+							}
+						}
+					}
+					if (altadd == 0) {
+						setTimeout(() => {
+							clearTimeout(setclearEnd);
+							clearEnd();
+							for (var eg in buttonInfo) {
+								buttonInfo[eg][1] = 0;
+							}
+						}, 100);
+					}
+					else {
+						clearTimeout(setclearEnd);
+						setclearEnd = setTimeout(clearEnd, 5000);
+						altActive += 1;
+					}
+					event.returnValue = false;
+				}
+
+				//if ev.ctrl==1
+				if(event.ctrlKey==1){
+					ctrlDown=1;
+					ctrlUsed=0;
+				}
+
+				if(ctrlDown==1&&event.keyCode!=17){
+					ctrlUsed=1;
+					if(event.keyCode==65){
+						$('input').select();
+					}
+					//event.returnValue = false;
+				}
+
+				if (ctrlActive >= 0) {
+					var keyLetter = '*',
+						ctrladd = 0;
+					if (event.keyCode>=48&&event.keyCode<=57) keyLetter=String.fromCharCode(event.keyCode);
+					else if (event.keyCode>=96&&event.keyCode<=105) keyLetter=String.fromCharCode(event.keyCode-48);
+					$('leftbt').innerHTML += "<sup>" + keyLetter + "</sup>";
+					for (var buttonid in buttonInfo) {
+						if (buttonInfo[buttonid][0] && buttonInfo[buttonid][0].length > 0) {
+							if (buttonInfo[buttonid][4] == ctrlActive && buttonInfo[buttonid][3].slice(ctrlActive, ctrlActive + 1) ==
+								keyLetter) {
+								buttonInfo[buttonid][4] += 1;
+								ctrladd = 1;
+								var egstr = buttonInfo[buttonid][3],
+									egget = buttonInfo[buttonid][4];
+								$(buttonid).innerHTML = buttonInfo[buttonid][2] + "<sup>" + "<b>" + egstr.slice(0, egget) + "</b>" +
+									egstr.slice(egget) + "</sup>";
+							} else {
+								buttonInfo[buttonid][4] = 0;
+								$(buttonid).innerHTML = buttonInfo[buttonid][2] + "<sup>" + buttonInfo[buttonid][3] + "</sup>";
+							}
+							if (buttonInfo[buttonid][4] == buttonInfo[buttonid][3].length) {
+								var buttonok = buttonid;
+								setTimeout(() => {
+									$(buttonok).click();
+									clearTimeout(setclearEnd);
+									clearEnd();
+									for (var eg in buttonInfo) {
+										buttonInfo[eg][4] = 0;
+									}
+								}, 100);
+								//return;
+							}
+						}
+					}
+					if (ctrladd == 0&&event.keyCode!=17) {
+						//否则会出现ctrl按下松开一次后，再长按ctrl松开，仍然显示ctrl
+						setTimeout(() => {
+							clearTimeout(setclearEnd);
+							clearEnd();
+							for (var eg in buttonInfo) {
+								buttonInfo[eg][4] = 0;
+							}
+						}, 100);
+					}
+					else {
+						clearTimeout(setclearEnd);
+						setclearEnd = setTimeout(clearEnd, 5000);
+						ctrlActive += 1;
+					}
+					event.returnValue = false;
+				}
+
+				// if(event.ctrlKey==1&&event.keyCode==65){
+				// 	$('input').select();
+				// }
+			}
+			if (page == 1) {
+				if (event.keyCode == 13) {
+					recover();
+					//return;
+				}
+				if (event.keyCode == 32) {
+					event.returnValue = false;
+					space += 1;
+					setTimeout('space=0;', 500);
+					if (space == 2) {
+						space = 0;
+						recover(); //0.5秒内两次按空格键恢复
+					}
+				}
+			}
+			if (page == 2) {
+				if (event.keyCode == rightKey[0][accumulate] + rightKey[1][0] || event.keyCode == rightKey[0][accumulate] +
+					rightKey[1][1]) {
+					accumulate += 1;
+					if (accumulate == 1) {
+						$('showfire').style.display = '';
+						$('firebr').style.display = '';
+					}
+					$('showfire').innerHTML += '* ';
+					console.log(accumulate);
+					if (accumulate == 6) {
+						setTimeout('recover();', 100);
+					}
+				} else {
+					accumulate = 0;
+					$('showfire').innerHTML = '';
+					$('showfire').style.display = 'none';
+					$('firebr').style.display = 'none';
+					console.log(accumulate);
+				}
+			}
+		}
+
+        function ifKeyUp(){
+            //$('bing').innerHTML+=event.keyCode;//String.fromCharCode(event.keyCode + 32);
+			if (page == 0&&ctrlUsed==0) {
+				if (event.keyCode == 17) {
+					if (ctrlActive < 0) {
+						ctrlActive = 0;
+						$('leftbt').style.display='';
+						$('leftbt').focus();
+						$('leftbt').style.color='#ff0000';
+						$('leftbt').innerHTML='ctrl';
+						for (var buttonid in buttonInfo) {
+							if (buttonInfo[buttonid][0])
+								$(buttonid).innerHTML = buttonInfo[buttonid][2] + "<sup>" + buttonInfo[buttonid][3] + "</sup>";
+						} //增加后缀
+						setclearEnd = setTimeout(clearEnd, 5000);
+					} else {
+						clearTimeout(setclearEnd);
+						clearEnd();
+					}
+				}
+				ctrlDown=0;
+            }
+        }
+
+		function sousuo(engine) {
+			var mystr = $("input").value;
+			mystr = encodeURI(mystr);
+			var adress = engines[engine][0] + mystr + engines[engine][1];
+			window.open(adress);
+		}
+
+		function copyjs(key) {
+			$("showjs").value = showtext[key];
+			$("showjs").select(); // 选中文本
+			document.execCommand("copy"); // 执行浏览器复制命令
+			//alert("复制成功");
+			$("copyok").style.display = "";
+			setTimeout('$("copyok").style.display="none"', 500);
+		}
+
+		function regfy(engine) {
+			var mystr = $("input").value;
+			var s1 = mystr;
+			var s2 = s1.replace(/(.)\n/g, "$1 ");
+			var s3 = s2.replace(/(\n){2,}/g, "\n");
+			//s4=s3.replace(/\n/g,'%0A');
+			var s4 = encodeURI(s3);
+			var adress = engines[engine][0] + s4;
+			window.open(adress);
+		}
+
+		function changeReg() {
+			if ($("regbdfanyi").style.display == 'none') {
+				$("regbdfanyi").style.display = '';
+				$("regggfanyi").style.display = '';
+				$("regfybr").style.display = '';
+			} else {
+				$("regbdfanyi").style.display = 'none';
+				$("regggfanyi").style.display = 'none';
+				$("regfybr").style.display = 'none';
+			}
+		}
+
+		function ifduohang() {
+			var mystr = $("input").value;
+			if (mystr.indexOf("\n") == -1) { //单行
+				$("duohang").style.display = "none";
+				$("duohangbr").style.display = "none";
+			} else {
+				$("duohang").style.display = "";
+				$("duohangbr").style.display = "";
+			}
+		}
+
+		function clearInput() {
+			$("input").value = "";
+			$("input").focus();
+			ifduohang();
+		}
+
+		function clearInputAll() {
+			clearInput();
+			$("clear").innerText = "清空所有";
+			//$("clear").onclick=function(){clearAll();};
+			document.oncontextmenu = function (e) {
+				e.preventDefault();
+			};
+			$("clear").onmousedown = function (e) {
+				if (e.button == 2) {
+					//alert("你点了右键");
+					lockall();
+				} else if (e.button == 0) {
+					//alert("你点了左键");
+					clearAll();
+				} else if (e.button == 1) {
+					alert("你点了滚轮");
+				}
+			};
+			setTimeout('$("clear").innerText="清空输入";$("clear").onmousedown=function(){};document.oncontextmenu=null;', 1000);
+		}
+
+		function clearAll() {
+			document.body.innerHTML = "";
+			page = 1;
+			setTimeout('document.body.ondblclick=function(){recover();};', 10);
+		}
+
+		function timestr() {
+			return new Date().toLocaleString('zh', {
+				hour12: false
+			});
+		}
+
+		function showTime() {
+			$('input').value = timestr();
+			//每隔1秒钟执行一次显示时间
+			setIntervalFun = setInterval("judgeTime()", 1000 * 1);
+		}
+
+		function judgeTime() {
+			//if(timeReg.test($('input').value)){
+			if ($('input') == 'input' || $('input') != 'input' && $('input').value.search(timeReg) == -1) {
+				clearInterval(setIntervalFun);
+				//alert('停止显示时间');
+			} else {
+				var selectionObj = window.getSelection();
+				var selectedText = selectionObj.toString();
+				$('input').value = timestr();
+				if (document.activeElement.id=='input' && selectedText.search(timeReg)==0) $('input').select();
+			}
+		}
+
+		function recover() {
+			alert("即将恢复...")
+			document.body.innerHTML = DB;
+			page = 0;
+			document.body.ondblclick = function () {
+				if (page == 0 && document.activeElement.toString().indexOf('TextArea') == -1) {
+					moveEnd($("input"));
+				}
+			};
+			setTimeout('$("input").focus();', 100);
+		}
+
+		function changedivcolor() {
+			var d1 = $('divleft');
+			var d2 = d1.getElementsByTagName('button');
+			for (var i = 0; i < d2.length; i++) {
+				var c1 = randcolor();
+				d2[i].style.color = c1;
+				d2[i].style.backgroundColor = ColorReverse(c1);
+			}
+		}
+
+		function randcolor() {
+			var colorValue = "0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f";
+			var colorArray = colorValue.split(",");
+			var color = "#";
+			for (var i = 0; i < 6; i++) {
+				color += colorArray[Math.floor(Math.random() * 16)];
+			}
+			return color;
+		}
+
+		function ColorReverse(OldColorValue) {
+			var OldColorValue = '0x' + OldColorValue.replace(/#/g, "");
+			var str = '000000' + (0xFFFFFF - OldColorValue).toString(16);
+			return '#' + str.substring(str.length - 6, str.length);
+		}
+
+		function randnum(n) {
+			var tmp = '';
+			for (var i = 0; i < n; i++) {
+				tmp += Math.floor(Math.random() * 10);
+			}
+			return tmp;
+		}
+
+		function randomString(n) {
+			var str = 'abcdefghijklmnopqrstuvwxyz0123456789';
+			var tmp = '';
+			for (var i = 0; i < n; i++) {
+				tmp += str.charAt(Math.floor(Math.random() * str.length));
+			}
+			return tmp;
+		}
+
+		function moveEnd(obj) { //使文本框焦点在末尾
+			obj.focus();
+			var len = obj.value.length;
+			if (document.selection) {
+				var sel = obj.createTextRange();
+				sel.moveStart('character', len);
+				sel.collapse();
+				sel.select();
+			} else if (typeof obj.selectionStart == 'number' && typeof obj.selectionEnd == 'number') {
+				obj.selectionStart = obj.selectionEnd = len;
+			}
+		}
+
+		function judgeTimeLine() {
+			if ($('timeline') == 'timeline'||$('timeline') != 'timeline' && $('timeline').innerHTML.search(timeReg) == -1) {
+				clearInterval(setIntervalFun);
+				//alert('停止显示时间');
+			} else {
+				$('timeline').innerHTML = timestr();
+			}
+		}
+
+		function lockall() {
+			document.body.innerHTML = lockhtml;
+			page = 2;
+			setTimeout("$('timeline').innerHTML=timestr(); setIntervalFun = setInterval('judgeTimeLine()', 1000 * 1);", 100);
+		}
+
+		function firm() {
+			return true;
+			//利用对话框返回的值 （true 或者 false）  
+			if (confirm("你确定使用此搜索引擎？")) {
+				return true;
+				//alert("点击了确定");  
+			} else {
+				return false;
+				//alert("点击了取消");  
+			}
+		}
+
+		function showother() {
+			var ids = ["regfybr", "regbdfanyi", "bingfy", "youdao", "fqbr", "google", "wikien", "wikizh",
+				"GoogleScholar", "youtube", "zhiwang","caiyun"
+			];
+			var displaydic = {
+				'': 'none',
+				'none': ''
+			};
+			var textdic = {
+				'展开其他': '收起其他',
+				'收起其他': '展开其他'
+			};
+			for (var i = 0; i < ids.length; i++) {
+				$(ids[i]).style.display = displaydic[$(ids[i]).style.display];
+			}
+			$('showother').innerText = textdic[$('showother').innerText];
+		}
+	</script>
+</body>
+
+</html>
