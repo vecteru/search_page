@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>简单搜索</title>
+	<title>simple search</title>
 	<link id="link" rel="shortcut icon" href="" type="image/x-icon" />
 	<style type="text/css">
 		html,
@@ -302,9 +302,9 @@
 
 	<textarea id="showjs" spellcheck="false"
 		style="font-size:12px;height:80px;width:400px;display:none;text-align:left">
-var imgs = document.getElementsByTagName('img');
-for(var i = 0 ; i < imgs.length ; i ++){ 
-    imgs[i].src=imgs[i].src.replace(/https:\/\/wikimedia.org\//, "http:\/\/en.wikii.cc\/")
+var imgs = document.getElementsByTagName('img');
+for(var i = 0 ; i < imgs.length ; i ++){ 
+    imgs[i].src=imgs[i].src.replace(/https:\/\/wikimedia.org\//, "http:\/\/en.wikii.cc\/")
 }
 </textarea>
 	<br id="showjsbr" style="display:none">
@@ -374,7 +374,7 @@ for(var i = 0 ; i < imgs.length ; i ++){ 
 			"clear":["qk",0,"",55],
 		}
 		var showtext = {
-			"wikijs": "var imgs = document.getElementsByTagName('img');\nfor(var i = 0 ; i < imgs.length ; i ++){ \n    imgs[i].src=imgs[i].src.replace(/https:\\/\\/wikimedia.org\\//, \"http:\\/\\/en.wikii.cc\\/\")\n}\n",
+			"wikijs": "var imgs = document.getElementsByTagName('img');\nfor(var i = 0 ; i < imgs.length ; i ++){ \n    imgs[i].src=imgs[i].src.replace(/https:\\/\\/wikimedia.org\\//, \"http:\\/\\/en.wikii.cc\\/\")\n}\n",
 			"editjs": "document.body.contentEditable=!0",
 		}
 		var loc = window.document.location.href;
@@ -383,7 +383,8 @@ for(var i = 0 ; i < imgs.length ; i ++){ 
 			$('link').href = "quantum01.jpg";
 		} else {
 			$('link').href =
-				"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585827751837&di=6a149bd4fb7085b5bc9cef9abea57eee&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F00%2F42%2F30%2F7056d65e3959f5d.jpg"; //绿色箭头logo
+				"https://avatars1.githubusercontent.com/u/69024699";//初始的头像网址
+			//	"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1585827751837&di=6a149bd4fb7085b5bc9cef9abea57eee&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F00%2F42%2F30%2F7056d65e3959f5d.jpg"; //绿色箭头logo
 		}
 		for (var buttonid in buttonInfo) {
 			buttonInfo[buttonid][1] = 0;
