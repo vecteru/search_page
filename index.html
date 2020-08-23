@@ -214,10 +214,10 @@
 			style="background-color:transparent;color:#00A1D6">B站</button>
 		<button class="bt1" id="github" onclick="sousuo(this.id)"
 			style="background-color:black;color:white">Github</button>
+		<button class="bt1" id="github" onclick="sousuo(this.id)"
+			style="background-color:#CB0000;color:white">CSDN</button>
 		<button class="bt1" id="stackoverflow" onclick="sousuo(this.id)"
 			style="background-color:transparent;color:#F48024;font-size:18px">StackOverflow</button>
-		<button class="bt1" id="wolframalpha" onclick="sousuo(this.id)"
-			style="background-color:transparent;color:#FF6C00;font-size:18px">WolframAlpha</button>
 		<!--<button class="bt1" id="duanluo" onclick="changeReg()" style="background-color:#878787;color:blue">
 <span style="color:white">段落</span><span>翻译</span>-->
 		<!--  <button class="bt1" id="shuqian" onclick="sousuo(this.id)" style="background-color:transparent;color:#127FF2">
@@ -251,6 +251,8 @@
 			style="background:#E02433;color:white;display:none;">有道翻译</button>
 		<button class="bt1" id="caiyun" onclick="sousuo(this.id)"
 			style="background:#56B084;color:white;display:none;">彩云小译</button>
+		<button class="bt1" id="WolframAlpha" onclick="sousuo(this.id)"
+			style="background-color:transparent;color:#FF6C00;font-size:18px;display:none;">WolframAlpha</button>
 		<br>
 	</div>
 
@@ -288,6 +290,10 @@
 		</button>
 		<button class="bt2" id="copyok" onclick="" style="background-color:white;color:blue;display:none">复制成功</button>
 		<br>暂时隐藏，再次加入时实现多文字，文本框适应大小 -->
+		<button class="bt2" id="fakeupdate" onclick="window.open('https://fakeupdate.net/win10ue/');"
+			style="background:#006DAE;color:white;">win10更新</button>
+		<button class="bt2" id="opennull" onclick="window.open('');"
+			style="background:black;color:white;">空白页</button><br>
 		<button class="bt2" id="randnum" onclick="$('input').value=randnum(10)"
 			style="background:black;color:#00FFFF;">随机数</button>
 		<button class="bt2" id="randstr" onclick="$('input').value=randomString(16)"
@@ -318,31 +324,32 @@ for(var i = 0 ; i < imgs.length ; i ++){
 		// "wiki2en":["http://en.bosimedia.com/w/index.php?cirrusUserTesting=glent_m0&sort=relevance&search=","&title=Special:Search&profile=advanced&fulltext=1&advancedSearch-current=%7B%7D&ns0=1"],
 		"use strict";
 		var engines={
-			"baidu":["https://www.baidu.com/s?ie=utf8&oe=utf8&tn=98010089_dg&ch=11&wd=",""],
-			"miji":["https://mijisou.com/?q=","&category_general=on&time_range=&language=zh-CN&pageno=1"],
-			"bing":["https://cn.bing.com/search?q=",""],
-			"google2":["https://chacha.design/search?q=",""],
-			"wiki2zh":["https://zh.jinzhao.wiki/w/index.php?search=",""],
-			"wiki2en":["https://en.jinzhao.wiki/w/index.php?search=",""],
-			"bdfanyi":["https://fanyi.baidu.com/?aldtype=16047#en/zh/",""],
-			"zhihu":["https://www.zhihu.com/search?type=content&q=",""],
-			"sougou":["https://www.sogou.com/web?query=","&_asf=www.sogou.com&p=40040100"],
-			"bili":["https://search.bilibili.com/all?keyword=",""],
-			"ggfanyi":["https://translate.google.cn/#view=home&op=translate&sl=en&tl=zh-CN&text=",""],
-			"github":["https://github.com/search?q=",""],
-			"stackoverflow":["https://stackoverflow.com/search?q=",""],
+			"baidu":["https://www.baidu.com/","s?ie=utf8&oe=utf8&tn=98010089_dg&ch=11&wd="],
+			"miji":["https://mijisou.com/","?category_general=on&time_range=&language=zh-CN&pageno=1&q="],
+			"bing":["https://cn.bing.com/","search?q="],
+			"google2":["https://chacha.design/","search?q="],
+			"wiki2zh":["https://zh.jinzhao.wiki/","w/index.php?search="],
+			"wiki2en":["https://en.jinzhao.wiki/","w/index.php?search="],
+			"bdfanyi":["https://fanyi.baidu.com/","?aldtype=16047#en/zh/"],
+			"zhihu":["https://www.zhihu.com/","search?type=content&q="],
+			"sougou":["https://www.sogou.com/","web?_asf=www.sogou.com&p=40040100&query="],
+			"bili":["https://search.bilibili.com/","all?keyword="],
+			"ggfanyi":["https://translate.google.cn/","#view=home&op=translate&sl=en&tl=zh-CN&text="],
+			"github":["https://github.com/","search?q="],
+			"stackoverflow":["https://stackoverflow.com/","search?q="],
 			"shuqian":["qqbrowser://bookmarks/#q=",""],
-			"Magi":["https://magi.com/search?q=",""],
-			"bingfy":["https://cn.bing.com/translator?ref=TThis&from=en&to=zh-Hans&text=",""],
+			"Magi":["https://magi.com/","search?q="],
+			"bingfy":["https://cn.bing.com/","translator?ref=TThis&from=en&to=zh-Hans&text="],
 			"youdao":["http://fanyi.youdao.com/#",""],
-			"google":["https://www.google.com/search?q=",""],
-			"wikien":["https://en.wikipedia.org/wiki/w/index.php?sort=relevance&search=",""],
-			"wikizh":["https://zh.wikipedia.org/wiki/w/index.php?sort=relevance&search=",""],
-			"GoogleScholar":["https://scholar.google.com.hk/scholar?q=",""],
-			"wolframalpha":["https://www.wolframalpha.com/input/?i=",""],
-			"youtube":["https://www.youtube.com/results?search_query=",""],
+			"google":["https://www.google.com/","search?q="],
+			"wikien":["https://en.wikipedia.org/","wiki/w/index.php?sort=relevance&search="],
+			"wikizh":["https://zh.wikipedia.org/","wiki/w/index.php?sort=relevance&search="],
+			"GoogleScholar":["https://scholar.google.com.hk/","scholar?q="],
+			"WolframAlpha":["https://www.wolframalpha.com/","input/?i="],
+			"youtube":["https://www.youtube.com/","results?search_query="],
 			"zhiwang":["https://www.cnki.net/#",""],
 			"caiyun":["https://fanyi.caiyunapp.com/#/",""],
+			"CSDN":["https://so.csdn.net/","so/search/s.do?q="],
 		}
 		var buttonInfo={
 			"baidu": ["bd",0,"",11],
@@ -364,7 +371,7 @@ for(var i = 0 ; i < imgs.length ; i ++){
 			"wikien": ["wke",0,"",32],
 			"wikizh": ["wkz",0,"",33],
 			"GoogleScholar": ["xgg",0,"",34],
-			"wolframalpha": ["wf",0,"",26],
+			"WolframAlpha": ["wf",0,"",26],
 			"youtube": ["yt",0,"",36],
 			"zhiwang": ["zw",0,"",35],
 			"regbdfanyi":["ybd",0,"",44],
@@ -641,10 +648,16 @@ for(var i = 0 ; i < imgs.length ; i ++){
         }
 
 		function sousuo(engine) {
+			//alert(1);return;
 			var mystr = $("input").value;
-			mystr = encodeURI(mystr);
-			var adress = engines[engine][0] + mystr + engines[engine][1];
-			window.open(adress);
+			if(mystr=="") window.open(engines[engine][0]);
+			else{
+				mystr = encodeURIComponent(mystr);//encodeURI
+				console.log(engine);
+				console.log(engines[engine]);
+				var adress = engines[engine][0] + engines[engine][1] + mystr;
+				window.open(adress);
+			}
 		}
 
 		function copyjs(key) {
@@ -663,7 +676,7 @@ for(var i = 0 ; i < imgs.length ; i ++){
 			var s3 = s2.replace(/(\n){2,}/g, "\n");
 			//s4=s3.replace(/\n/g,'%0A');
 			var s4 = encodeURI(s3);
-			var adress = engines[engine][0] + s4;
+			var adress = engines[engine][0] + engines[engine][1] + s4;
 			window.open(adress);
 		}
 
@@ -845,7 +858,7 @@ for(var i = 0 ; i < imgs.length ; i ++){
 
 		function showother() {
 			var ids = ["regfybr", "regbdfanyi", "bingfy", "youdao", "fqbr", "google", "wikien", "wikizh",
-				"GoogleScholar", "youtube", "zhiwang","caiyun"
+				"GoogleScholar", "youtube", "zhiwang","caiyun","WolframAlpha",
 			];
 			var displaydic = {
 				'': 'none',
