@@ -214,7 +214,7 @@
 			style="background-color:transparent;color:#00A1D6">B站</button>
 		<button class="bt1" id="github" onclick="sousuo(this.id)"
 			style="background-color:black;color:white">Github</button>
-		<button class="bt1" id="github" onclick="sousuo(this.id)"
+		<button class="bt1" id="CSDN" onclick="sousuo(this.id)"
 			style="background-color:#CB0000;color:white">CSDN</button>
 		<button class="bt1" id="stackoverflow" onclick="sousuo(this.id)"
 			style="background-color:transparent;color:#F48024;font-size:18px">StackOverflow</button>
@@ -260,7 +260,7 @@
 	onmouseout="$('in_div').style.visibility='hidden'">
 		<div id="in_div" style="visibility:hidden">
 		<button class="bt2" id="littlegj" onclick="changedivcolor()">小工具</button><br>
-		<button class="bt2" id="regexr-cn" onclick="window.open('https://regexr.com/');"
+		<button class="bt2" id="regexr" onclick="window.open('https://regexr.com/');"
 			style="background:#2F3335;color:#D4D4D9;">正则测试</button>
 		<!--该网址为中文版本https://regexr-cn.com/，列表功能无法使用。英文版无法访问(2020-4-3)：https://regexr.com/。英文Github网址：https://github.com/gskinner/regexr/。已修改，目前英文版又可以访问(2020-4-6)。-->
 		<button class="bt2" id="netcut"
@@ -363,7 +363,7 @@ for(var i = 0 ; i < imgs.length ; i ++){
 			"bili": ["bl",0,"",23],
 			"ggfanyi": ["ygg",0,"",21],
 			"github": ["gh",0,"",24],
-			"stackoverflow": ["sf",0,"",25],
+			"stackoverflow": ["sf",0,"",26],
 			"Magi": ["mg",0,"",14],
 			"bingfy": ["yby",0,"",42],
 			"youdao": ["yd",0,"",43],
@@ -371,7 +371,7 @@ for(var i = 0 ; i < imgs.length ; i ++){
 			"wikien": ["wke",0,"",32],
 			"wikizh": ["wkz",0,"",33],
 			"GoogleScholar": ["xgg",0,"",34],
-			"WolframAlpha": ["wf",0,"",26],
+			"WolframAlpha": ["wf",0,"",45],
 			"youtube": ["yt",0,"",36],
 			"zhiwang": ["zw",0,"",35],
 			"regbdfanyi":["ybd",0,"",44],
@@ -379,6 +379,19 @@ for(var i = 0 ; i < imgs.length ; i ++){
 			"showtime":["t",0,"",53],
 			"showother":["zk",0,"",54],
 			"clear":["qk",0,"",55],
+			"CSDN":["cs",0,"",25],
+			"littlegj":["gj",0,"",""],
+			"regexr":["zz",0,"",""],
+			"netcut":["jt",0,"",""],
+			"runjs":["js",0,"",""],
+			"seeLaTeX":["la",0,"",""],
+			"jiumo":["jm",0,"",""],
+			"erweima":["ew",0,"",""],
+			"fakeupdate":["gx",0,"",""],
+			"opennull":["kb",0,"",""],
+			"randnum":["sjs",0,"",""],
+			"randstr":["sjc",0,"",""],
+
 		}
 		var showtext = {
 			"wikijs": "var imgs = document.getElementsByTagName('img');\nfor(var i = 0 ; i < imgs.length ; i ++){ \n    imgs[i].src=imgs[i].src.replace(/https:\\/\\/wikimedia.org\\//, \"http:\\/\\/en.wikii.cc\\/\")\n}\n",
@@ -433,6 +446,8 @@ for(var i = 0 ; i < imgs.length ; i ++){
             for (var buttonid in buttonInfo) {
                 $(buttonid).innerHTML = buttonInfo[buttonid][2];
                 buttonInfo[buttonid][1] = 0;
+				if ($(buttonid).className=="bt2")
+					$(buttonid).style.width="98px";
             }
         }; //清除增加的后缀
 
@@ -455,6 +470,8 @@ for(var i = 0 ; i < imgs.length ; i ++){
 						$('leftbt').innerHTML='alt';
 						$('leftbt').style.color='#00ffff';
 						for (var buttonid in buttonInfo) {
+							if ($(buttonid).className=="bt2")
+								$(buttonid).style.width="118px";
 							if (buttonInfo[buttonid][0])
 								$(buttonid).innerHTML = buttonInfo[buttonid][2] + "<sup>" + buttonInfo[buttonid][0] + "</sup>";
 						} //增加后缀
@@ -536,7 +553,7 @@ for(var i = 0 ; i < imgs.length ; i ++){
 					else if (event.keyCode>=96&&event.keyCode<=105) keyLetter=String.fromCharCode(event.keyCode-48);
 					$('leftbt').innerHTML += "<sup>" + keyLetter + "</sup>";
 					for (var buttonid in buttonInfo) {
-						if (buttonInfo[buttonid][0] && buttonInfo[buttonid][0].length > 0) {
+						if (buttonInfo[buttonid][3] && buttonInfo[buttonid][3].length > 0) {
 							if (buttonInfo[buttonid][4] == ctrlActive && buttonInfo[buttonid][3].slice(ctrlActive, ctrlActive + 1) ==
 								keyLetter) {
 								buttonInfo[buttonid][4] += 1;
@@ -635,7 +652,7 @@ for(var i = 0 ; i < imgs.length ; i ++){
 						$('leftbt').style.color='#ff0000';
 						$('leftbt').innerHTML='ctrl';
 						for (var buttonid in buttonInfo) {
-							if (buttonInfo[buttonid][0])
+							if (buttonInfo[buttonid][3])
 								$(buttonid).innerHTML = buttonInfo[buttonid][2] + "<sup>" + buttonInfo[buttonid][3] + "</sup>";
 						} //增加后缀
 						setclearEnd = setTimeout(clearEnd, 5000);
@@ -762,15 +779,17 @@ for(var i = 0 ; i < imgs.length ; i ++){
 		}
 
 		function recover() {
-			alert("即将恢复...")
-			document.body.innerHTML = DB;
-			page = 0;
-			document.body.ondblclick = function () {
-				if (page == 0 && document.activeElement.toString().indexOf('TextArea') == -1) {
-					moveEnd($("input"));
-				}
-			};
-			setTimeout('$("input").focus();', 100);
+			//alert("即将恢复...");
+			if(confirm("是否恢复？")){
+				document.body.innerHTML = DB;
+				page = 0;
+				document.body.ondblclick = function () {
+					if (page == 0 && document.activeElement.toString().indexOf('TextArea') == -1) {
+						moveEnd($("input"));
+					}
+				};
+				setTimeout('$("input").focus();', 100);
+			}
 		}
 
 		function changedivcolor() {
@@ -871,7 +890,7 @@ for(var i = 0 ; i < imgs.length ; i ++){
 			for (var i = 0; i < ids.length; i++) {
 				$(ids[i]).style.display = displaydic[$(ids[i]).style.display];
 			}
-			$('showother').innerText = textdic[$('showother').innerText];
+			$('showother').innerText = textdic[$('showother').innerText.slice(0,4)];
 		}
 	</script>
 </body>
