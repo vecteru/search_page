@@ -172,6 +172,21 @@
     -ms-animation: fade-in 4s ease 0s 1;
 		}
 
+		
+		#divMenu
+			{
+				list-style: none;
+				/* background: gainsboro; */
+				background: transparent;
+				border: solid 1px darkgrey;
+				margin: 0px;
+				padding: 5px;
+				position: absolute;
+				/*left: 0px;*/
+				top: 0px;
+				display: none;
+			}
+
 	</style>
 </head>
 
@@ -182,56 +197,52 @@
 			onmouseout="this.innerHTML='当前为多行输入'" style="color:red;font-size:18px;display:none">当前为多行输入</button>
 		<br id="duohangbr" style="display:none">
 		<button id="leftbt" style="display:none;" onclick="this.style.color=(function (rgbColor){if (rgbColor.indexOf('rgb') > -1) {var arrRGB =[,,,];var colorReg = /\s*\d+,\s*\d+,\s*\d+/i; var t = colorReg.exec(rgbColor)[0].split(','); console.log(t); for (var i = 0; i < arrRGB.length; i++) { arrRGB[i] = 255 - t[i]; } return 'rgb(' + arrRGB.join(',') + ')';}else{return rgbColor;}})(this.style.color);"></button>
-		<span><textarea id="input" type="text" placeholder="输入内容" onkeyup="ifduohang()" autofocus></textarea>
-			<button class="bt1" id="bing" onclick="sousuo(this.id)" style="background:#0C8484;color:white">必应</button>
-		</span>
+		<textarea id="input" type="text" placeholder="输入内容" onkeyup="ifduohang()" autofocus></textarea>
 		<br>
+		<button class="bt1" id="bing" onclick="sousuo(this.id)" style="background:#0C8484;color:white">必应</button>
+		<button class="bt1" id="baidu" onclick="if(firm()){sousuo(this.id);}"
+			style="background-color:white;color:blue;">百度</button>
 		<button class="bt1" id="sougou" onclick="sousuo(this.id)"
 			style="background:transparent;color:#FF7F00">搜狗</button>
 		<button class="bt1" id="miji" onclick="sousuo(this.id)" style="background:transparent;color:white">秘迹</button>
 		<button class="bt1" id="Magi" onclick="sousuo(this.id)" style="background:black;color:#40AE36">Magi</button>
-		<button class="bt1" id="google2" onclick="sousuo(this.id)" style="background:white">
-			<span style="color:red">谷</span><span style="color:#fbcc05">歌</span><span style="color:green">镜</span><span
-				style="color:blue">像</span>
-		</button>
-		<button class="bt1" id="wiki2zh" onclick="sousuo(this.id)" style="background:white;color:black">
-			<span>维基镜像</span><span style="font-size:18px;color:blue">中</span>
-		</button>
-		<button class="bt1" id="wiki2en" onclick="sousuo(this.id)" style="background:white;color:black">
-			<span>维基镜像</span><span style="font-size:18px;color:blue">英</span>
-		</button>
-		<button class="bt1" id="baidu" onclick="if(firm()){sousuo(this.id);}"
-			style="background-color:white;color:blue;line-height:22px;height:26px;font-size:18px;">百度</button>
-		<br>
-		<button class="bt1" id="bdfanyi" onclick="regfy('bdfanyi')"
-			style="background-color:#3485fb;color:white;display:none;">百度翻译</button>
-		<button class="bt1" id="ggfanyi" onclick="regfy('ggfanyi')" style="background-color:#FAFAFA;">
-			<span style="color:#4A8AF4">谷歌</span><span style="color:#878787">翻译</span>
-		</button>
+		<button class="bt1" id="google" onclick="sousuo(this.id)" style="background:white;"><span
+				style="color:#4285F4">谷</span><span style="color:#EA4335">歌</span></button>
+		<button class="bt1" id="wikizh" onclick="sousuo(this.id)" style="background:white;color:black;">
+			<span>维基</span><span style="font-size:18px;color:	blue"></span></button>
 		<button class="bt1" id="zhihu" onclick="sousuo(this.id)"
 			style="background-color:#178be9;color:white">知乎</button>
+		<br>
+		<!-- <button class="bt1" id="bdfanyi" onclick="regfy('bdfanyi')"
+			style="background-color:#3485fb;color:white;display:none;">百度翻译</button>似乎没用到
+			曾经百度的style:line-height:22px;height:26px;font-size:18px;-->
+		<button class="bt1" id="regbdfanyi" onclick="regfy('bdfanyi')"
+			style="background-color:#3485fb;color:white;">
+			百度翻译
+		</button>
+		<button class="bt1" id="GoogleScholar" onclick="sousuo(this.id)"
+			style="background:white;color:#356AC3;">谷歌学术</button>
 		<button class="bt1" id="bili" onclick="sousuo(this.id)"
 			style="background-color:transparent;color:#00A1D6">B站</button>
 		<button class="bt1" id="github" onclick="sousuo(this.id)"
 			style="background-color:black;color:white">Github</button>
 		<button class="bt1" id="CSDN" onclick="sousuo(this.id)"
 			style="background-color:#CB0000;color:white">CSDN</button>
-		<button class="bt1" id="stackoverflow" onclick="sousuo(this.id)"
-			style="background-color:transparent;color:#F48024;font-size:18px">StackOverflow</button>
+		<br>
 		<!--<button class="bt1" id="duanluo" onclick="changeReg()" style="background-color:#878787;color:blue">
 <span style="color:white">段落</span><span>翻译</span>-->
 		<!--  <button class="bt1" id="shuqian" onclick="sousuo(this.id)" style="background-color:transparent;color:#127FF2">
 本地书签
 </button> 无法用window打开书签管理。  -->
-		<br id="fqbr" style="display:none">
-		<button class="bt1" id="google" onclick="sousuo(this.id)" style="background:white;display:none;"><span
-				style="color:#4285F4">谷</span><span style="color:#FBBC05">歌</span></button>
-		<button class="bt1" id="wikizh" onclick="sousuo(this.id)" style="background:white;color:black;display:none;">
-			<span>维基</span><span style="font-size:18px;color:blue">中文</span></button>
+		<button class="bt1" id="google2" onclick="sousuo(this.id)" style="background:white;display:none;">
+			<span style="color:red">谷</span><span style="color:#fbcc05">歌</span><span style="color:green">镜</span><span
+				style="color:blue">像</span></button>
+		<button class="bt1" id="wiki2zh" onclick="sousuo(this.id)" style="background:white;color:black;display:none;">
+			<span>维基镜像</span><span style="font-size:18px;color:blue">中</span></button>
+		<button class="bt1" id="wiki2en" onclick="sousuo(this.id)" style="background:white;color:black;display:none;">
+			<span>维基镜像</span><span style="font-size:18px;color:blue">英</span></button>
 		<button class="bt1" id="wikien" onclick="sousuo(this.id)" style="background:white;color:black;display:none;">
 			<span>维基</span><span style="font-size:18px;color:blue">英文</span></button>
-		<button class="bt1" id="GoogleScholar" onclick="sousuo(this.id)"
-			style="background:white;color:#356AC3;display:none;">谷歌学术</button>
 		<button class="bt1" id="zhiwang" onclick="sousuo(this.id)"
 			style="background:#5891ED;color:black;display:none;">知网</button>
 		<button class="bt1" id="youtube" onclick="sousuo(this.id)"
@@ -241,9 +252,8 @@
 			style="height:32px;background-color:#FAFAFA;color:gray;font-size:18px;display:none;">段落
 			<span style="color:#4A8AF4">谷歌</span><span style="color:#878787">翻译</span>
 		</button> -->
-		<button class="bt1" id="regbdfanyi" onclick="regfy('bdfanyi')"
-			style="height:32px;background-color:#3485fb;color:white;font-size:18px;display:none;">
-			百度翻译
+		<button class="bt1" id="ggfanyi" onclick="regfy('ggfanyi')" style="background-color:#FAFAFA;display:none;">
+			<span style="color:#4A8AF4">谷歌</span><span style="color:#878787">翻译</span>
 		</button>
 		<button class="bt1" id="bingfy" onclick="regfy('bingfy')"
 			style="background:green;color:white;display:none;">必应翻译</button>
@@ -251,9 +261,25 @@
 			style="background:#E02433;color:white;display:none;">有道翻译</button>
 		<button class="bt1" id="caiyun" onclick="sousuo(this.id)"
 			style="background:#56B084;color:white;display:none;">彩云小译</button>
+		<button class="bt1" id="jianshu" onclick="sousuo(this.id)"
+			style="background:#EA6F5A;color:white;display:none;">简书</button>
 		<button class="bt1" id="WolframAlpha" onclick="sousuo(this.id)"
 			style="background-color:transparent;color:#FF6C00;font-size:18px;display:none;">WolframAlpha</button>
-		<br>
+		<button class="bt1" id="stackoverflow" onclick="sousuo(this.id)"
+			style="background-color:transparent;color:#F48024;font-size:18px;display:none;">StackOverflow</button>
+		<button class="bt1" id="doge" onclick="sousuo(this.id)"
+			style="background:#FFCE7F;color:#F12526;display:none;">多吉</button>
+		<button class="bt1" id="mengso" onclick="sousuo(this.id)"
+			style="background:#D4DA49;color:#40ACB7;display:none;">萌搜</button>
+		<button class="bt1" id="gitee" onclick="sousuo(this.id)"
+			style="background:#C71D23;color:white;display:none;">Gitee</button>
+		<button class="bt1" id="quora" onclick="sousuo(this.id)"
+			style="background:white;color:#B92B27;display:none;">Quora</button>
+		<button class="bt1" id="weibo" onclick="sousuo(this.id)"
+			style="background:#E6162D;color:white;display:none;">微博</button>
+		<button class="bt1" id="googles1" onclick="sousuo(this.id)"
+			style="background:#FEDF69;color:#3172A7;display:none;">镜像列表</button>
+		<!-- <br> -->
 	</div>
 
 	<div class="divleft" id="divleft" style="background-color:transparent;color:blue;" onmouseover="$('in_div').style.visibility='visible'"
@@ -265,6 +291,7 @@
 		<!--该网址为中文版本https://regexr-cn.com/，列表功能无法使用。英文版无法访问(2020-4-3)：https://regexr.com/。英文Github网址：https://github.com/gskinner/regexr/。已修改，目前英文版又可以访问(2020-4-6)。-->
 		<button class="bt2" id="netcut"
 		onclick="window.open('http://netcut.cn/');"
+		oncontextmenu="window.open('http://netcut.cn/'+$('input').value);"
 		style="background:#1779BA;color:white;">网络剪贴板</button><br>
 		<button class="bt2" id="runjs"
 			onclick="window.open('https://www.runoob.com/try/try.php?filename=tryjs_events');"
@@ -299,8 +326,8 @@
 		<button class="bt2" id="randstr" onclick="$('input').value=randomString(16)"
 			style="background:black;color:#00FF00;">随机字符串</button><br>
 		<button class="bt2" id="showtime" onclick="showTime()" style="background:black;color:#FFA500;">显示时间</button>
-		<button class="bt2" id="showother" onclick="showother()"
-			style="background:black;color:rgb(0, 119, 255);">展开其他</button><br>
+		<!-- <button class="bt2" id="showother" onclick="showother()"
+			style="background:black;color:rgb(0, 119, 255);">展开其他</button><br> -->
 		<button class="bt2" id="clear" onclick="clearInputAll();"
 			style="background:black;color:white;">清空输入</button><br>
 		</div>
@@ -318,7 +345,6 @@ for(var i = 0 ; i < imgs.length ; i ++){
 	<script>
 		//搜索引擎颜色：白中蓝，绿白，灰白，白彩(红黄绿蓝)，白黑
 		//网站logo查看：favicon.ico
-		//qw:engines
 		// 失效 "google2":["http://www.gkoso.com.cn/search?ie=utf8&hl=zh-CN&source=hp&biw=&bih=&q=","&btnG=Google+%CB%D1%CB%F7"],
 		// "wiki2zh":["https://www.wikii.cc/w/index.php?sort=relevance&search=","&title=Special:%E6%90%9C%E7%B4%A2&profile=advanced&fulltext=1&advancedSearch-current=%7B%7D&ns0=1"],
 		// "wiki2en":["http://en.bosimedia.com/w/index.php?cirrusUserTesting=glent_m0&sort=relevance&search=","&title=Special:Search&profile=advanced&fulltext=1&advancedSearch-current=%7B%7D&ns0=1"],
@@ -327,9 +353,13 @@ for(var i = 0 ; i < imgs.length ; i ++){
 			"baidu":["https://www.baidu.com/","s?ie=utf8&oe=utf8&tn=98010089_dg&ch=11&wd="],
 			"miji":["https://mijisou.com/","?category_general=on&time_range=&language=zh-CN&pageno=1&q="],
 			"bing":["https://cn.bing.com/","search?q="],
-			"google2":["https://chacha.design/","search?q="],
-			"wiki2zh":["https://zh.jinzhao.wiki/","w/index.php?search="],
-			"wiki2en":["https://en.jinzhao.wiki/","w/index.php?search="],
+			//"google2":["https://chacha.design/","search?q="],//失效(2021.03.14-16.48.34)
+			//"google2":["http://g.caduo.ml/","search?q="],//失效(2021.03.19-21.00.55)
+			"google2":["https://goo.gle.workers.dev/","search?q="],
+			"googles1":["http://tools.bugscaner.com/google/#",""],
+			// "wiki2zh":["https://zh.jinzhao.wiki/","w/index.php?search="],//不可用(2021.03.14-14.53.01)
+			"wiki2zh":["https://wiwiki.kfd.me/","w/index.php?search="],//可用(2021.03.14-15.13.57)
+			"wiki2en":["https://en.jinzhao.wiki/","w/index.php?search="],//可用(2021.03.14-14.53.13)
 			"bdfanyi":["https://fanyi.baidu.com/","?aldtype=16047#en/zh/"],
 			"zhihu":["https://www.zhihu.com/","search?type=content&q="],
 			"sougou":["https://www.sogou.com/","web?_asf=www.sogou.com&p=40040100&query="],
@@ -350,48 +380,44 @@ for(var i = 0 ; i < imgs.length ; i ++){
 			"zhiwang":["https://www.cnki.net/#",""],
 			"caiyun":["https://fanyi.caiyunapp.com/#/",""],
 			"CSDN":["https://so.csdn.net/","so/search/s.do?q="],
+			"jianshu":["https://www.jianshu.com/","search?q="],
+			"doge":["https://www.dogedoge.com/","results?q="],
+			"mengso":["https://mengso.com/","search?q="],
+			"gitee":["https://search.gitee.com/","?q="],
+			"weibo":["https://s.weibo.com/weibo/",""],
+			"quora":["https://www.quora.com/","search?q="],
 		}
-		var buttonInfo={
-			"baidu": ["bd",0,"",11],
-			"miji": ["mj",0,"",13],
-			"bing": ["by",0,"",10],
-			"google2": ["jgg",0,"",15],
-			"wiki2zh": ["jwkz",0,"",16],
-			"wiki2en": ["jwke",0,"",17],
-			"zhihu": ["zh",0,"",22],
-			"sougou": ["sg",0,"",12],
-			"bili": ["bl",0,"",23],
-			"ggfanyi": ["ygg",0,"",21],
-			"github": ["gh",0,"",24],
-			"stackoverflow": ["sf",0,"",26],
-			"Magi": ["mg",0,"",14],
-			"bingfy": ["yby",0,"",42],
-			"youdao": ["yd",0,"",43],
-			"google": ["gg",0,"",31],
-			"wikien": ["wke",0,"",32],
-			"wikizh": ["wkz",0,"",33],
-			"GoogleScholar": ["xgg",0,"",34],
-			"WolframAlpha": ["wf",0,"",45],
-			"youtube": ["yt",0,"",36],
-			"zhiwang": ["zw",0,"",35],
-			"regbdfanyi":["ybd",0,"",44],
-			"caiyun":["cy",0,"",41],
-			"showtime":["t",0,"",53],
-			"showother":["zk",0,"",54],
-			"clear":["qk",0,"",55],
-			"CSDN":["cs",0,"",25],
-			"littlegj":["gj",0,"",""],
-			"regexr":["zz",0,"",""],
-			"netcut":["jt",0,"",""],
-			"runjs":["js",0,"",""],
-			"seeLaTeX":["la",0,"",""],
-			"jiumo":["jm",0,"",""],
-			"erweima":["ew",0,"",""],
-			"fakeupdate":["gx",0,"",""],
-			"opennull":["kb",0,"",""],
-			"randnum":["sjs",0,"",""],
-			"randstr":["sjc",0,"",""],
-
+		var buttonInfo0={
+			"baidu":"bd", "miji":"mj", "bing":"by", "google2":"jgg", "wiki2zh":"jwkz", "wiki2en":"jwke", 
+			"zhihu":"zh", "sougou":"sg", "bili":"bl", "github":"gh", "stackoverflow":"sf", "Magi":"mg", 
+			"bingfy":"yby", "youdao":"yd", "google":"gg", "wikien":"wke", "wikizh":"wkz", "GoogleScholar":"xgg", 
+			"WolframAlpha":"wf", "youtube":"yt", "zhiwang":"zw", "regbdfanyi":"ybd", "caiyun":"cy", "showtime":"t", 
+			"clear":"qk", "CSDN":"cs", "littlegj":"gj", "regexr":"zz", "netcut":"jt", "runjs":"yxjs", 
+			"seeLaTeX":"la", "jiumo":"jm", "erweima":"ew", "fakeupdate":"gx", "opennull":"kb", "randnum":"sjs", 
+			"randstr":"sjc","jianshu":"js","ggfanyi":"ygg","doge":"dj","mengso":"ms","gitee":"ge",
+			"quora":"qu","weibo":"wb","googles1":"lbgg",
+		}; //调整位置后，数字编号自动生成，原按钮信息只保留简称。
+		// //查看缩写是否重复
+		// var engines_abbr=Object.values(buttonInfo0);
+		// function isRepeat(arr){var hash = {};for(var i in arr){if(hash[arr[i]]) return true;hash[arr[i]]=true;}return false;}
+		// console.log(isRepeat(engines_abbr));
+		// //查看所有按钮
+		// var bts=document.getElementsByTagName('button');
+		// for(var i=0;i<bts.length*0;i++){bts[i].style.display='';}
+		var buttonInfo={};
+		for(var bt in buttonInfo0){
+			buttonInfo[bt]=[buttonInfo0[bt],0,"",0];
+		}
+		var hasMenu={
+			'wikizh':['wikien','wiki2zh','wiki2en'],
+			"regbdfanyi":['ggfanyi',"bingfy","youdao","caiyun"],
+			'google':['google2','googles1'],
+			'zhihu':['weibo','quora'],
+			'bili':['youtube'],
+			'CSDN':['jianshu','stackoverflow','WolframAlpha'],
+			'GoogleScholar':['zhiwang'],
+			'miji':['doge','mengso'],
+			'github':['gitee'],
 		}
 		var showtext = {
 			"wikijs": "var imgs = document.getElementsByTagName('img');\nfor(var i = 0 ; i < imgs.length ; i ++){ \n    imgs[i].src=imgs[i].src.replace(/https:\\/\\/wikimedia.org\\//, \"http:\\/\\/en.wikii.cc\\/\")\n}\n",
@@ -439,17 +465,224 @@ for(var i = 0 ; i < imgs.length ; i ++){
 		var ctrlDown=0;
 		var ctrlUsed=0;
         var clearEnd = function () {
-            altActive = -1;
-            ctrlActive = -1;
-            $('leftbt').style.display='none';
-            $("input").focus();
-            for (var buttonid in buttonInfo) {
-                $(buttonid).innerHTML = buttonInfo[buttonid][2];
-                buttonInfo[buttonid][1] = 0;
-				if ($(buttonid).className=="bt2")
-					$(buttonid).style.width="98px";
+			if(page == 0){
+				altActive = -1;
+				ctrlActive = -1;
+				$('leftbt').style.display='none';
+				$("input").focus();
+				for (var buttonid in buttonInfo) {
+					$(buttonid).innerHTML = buttonInfo[buttonid][2];
+					buttonInfo[buttonid][1] = 0;
+					if ($(buttonid).className=="bt2")
+						$(buttonid).style.width="98px";
+				}
             }
-        }; //清除增加的后缀
+		}; //清除增加的后缀
+
+		rightMenu();//绑定右键事件
+
+		//根据位置标注编号
+		var bts=document.getElementsByClassName('content')[0].childNodes;
+		var num1=1,num2=1;
+		for(var i=0;i<bts.length;i++){
+			if(bts[i].tagName=="BUTTON" && bts[i].style.display!='none'){
+				//console.log(bts[i].id);
+				buttonInfo[bts[i].id][3]=''+num1+num2;
+				num2+=1;
+			}
+			else if(bts[i].tagName=="BR" && num2>1){
+				num2=1;
+				num1+=1;
+			}
+		}
+		var lbts=$('in_div').childNodes;
+		var num1=3,num2=1; //按照列、行,3-4,1-n排列。
+		for(var i=0;i<lbts.length;i++){
+			if(lbts[i].tagName=="BUTTON"){
+				//console.log(lbts[i].id);
+				buttonInfo[lbts[i].id][3]=''+num1+num2;
+				num1+=1;
+			}
+			else if(lbts[i].tagName=="BR"){
+				num1=3;
+				num2+=1;
+			}
+		}
+		
+
+		function showMenu(buttonTag){
+			if (!(buttonTag in hasMenu)){
+				return;
+			}
+			
+			//如果不存在菜单按钮，创建
+			if(!(document.getElementById("divMenu"))){
+				var divMenu=document.createElement("div");
+				divMenu.id='divMenu';
+				divMenu.style.position='absolute';
+				// divMenu.style.width='80px';
+			}
+			//如果存在，清空内容
+			else{
+				var divMenu=document.getElementById("divMenu");
+				//先把内容移动出来
+				var content=document.getElementsByClassName('content')[0];
+				for(var bti=0;bti<divMenu.childNodes.length;bti++){
+					var bt=divMenu.childNodes[bti];
+					if(bt.tagName=="BUTTON"){
+						content.appendChild(bt);
+						bt.style.display='none';
+					}
+				}
+				divMenu.innerHTML="";
+			}
+			
+			for(var i=0;i<hasMenu[buttonTag].length;i++){
+				if(divMenu.childElementCount>0){
+					divMenu.appendChild(document.createElement("br"));
+				}
+				// console.log(hasMenu[buttonTag][i]);
+				// var buttMenu=document.getElementById(hasMenu[buttonTag][i]).cloneNode('true');
+				// buttMenu.style.display="";
+				// divMenu.appendChild(buttMenu);
+				//隐藏按钮移动到菜单
+				//divMenu.insertBefore
+				var buttMenu=document.getElementById(hasMenu[buttonTag][i]);
+				if(!buttMenu){
+					var aa=1;
+				}
+				buttMenu.style.display="";
+				divMenu.appendChild(buttMenu);
+			}
+
+			document.body.appendChild(divMenu);
+		}
+
+		function rightMenu(){
+			document.documentElement.oncontextmenu=function (e) {
+				// console.log(document.activeElement);
+				var rightId=document.activeElement.id;
+				console.log('rightId:'+rightId+',end');
+				if(!rightId){
+					return;
+				}
+				//如果右击的id没有菜单，忽略
+				//增加菜单内右键切换位置
+				var divM=document.getElementById("divMenu");
+				if(divM){
+					for(var i=0;i<divMenu.childNodes.length;i++){
+						if(rightId==divMenu.childNodes[i].id){//右键按钮在菜单中找到
+							//寻找之前右键的按钮
+							var menu;
+							for(menu in hasMenu){
+								//console.log(menu);
+								//console.log(hasMenu[menu]);
+								//if(rightId in hasMenu[menu])//错误，如'q' in ['q','w']为false
+								if(hasMenu[menu].indexOf(rightId)!=-1){
+									break;
+								}
+							}
+							//交换位置
+							console.log('menu and rightId:'+menu+','+rightId+',end');
+							exchange(menu,rightId);
+							
+							// //补充新放置的按钮//注：不再使用复制后，不需要补充
+							// var contentAdd=0;
+							// var content=document.getElementsByClassName('content')[0];
+							// for(var ci=0;ci<content.childNodes.length;ci++){
+							// 	if(content.childNodes[ci].id==menu){
+							// 		contentAdd=1;
+							// 	}
+							// }
+							// if(contentAdd==0){
+							// 	var buttMenu=$(menu);
+							// 	buttMenu.style.display="none";
+							// 	content.appendChild(buttMenu);
+							// }
+							//修改标号
+							buttonInfo[rightId][3]=buttonInfo[menu][3];
+							buttonInfo[menu][3]='';
+							//修改hasMenu
+							hasMenu[rightId]=hasMenu[menu].map(me => {
+								if (me == rightId)
+									return menu;
+								else
+									return me;
+							});
+							delete hasMenu[menu];
+							divM.style.display="none";//交换元素后不显示菜单
+							return false;
+						}
+					}
+				}
+				if (!(rightId in hasMenu)){
+					return true;
+				}
+				showMenu(rightId);
+			//提取到函数外面作为全局变量
+			//自定义一个浏览器右键菜单，单击右键是显示它
+			var rm=document.getElementById("divMenu");
+			// rm=divMenus[divMenu];
+			//oncontextmenu上下文菜单事件，右键菜单
+				//显示我们自己定义的右键菜单
+				//1.找到菜单
+				//提取到函数外面作为全局变量
+				
+				//兼容Event对象
+				e=e || window.event;
+				
+				//2.设置菜单的位置等于鼠标的坐标
+				//判断：如果鼠标的位置+菜单的宽度>网页的宽度，那么就改为右边定位
+				//鼠标坐标
+				var mx=e.clientX;
+				var my=e.clientY;
+				//菜单宽度
+				// var rmWidth=parseInt(rm.style.width);//不合适的方法，因为可能没定义div的宽度
+				// var maxWidth=0;//方法一，用子节点宽度的最大值代替
+				// function getMax(value){maxWidth=Math.max(maxWidth,value.offsetWidth);}
+				// rm.childNodes.forEach(getMax);
+				// var rmWidth=maxWidth;
+				var rmWidth=rm.offsetWidth;//方法二，直接用offsetWidth
+				//网页的宽度(高度用同样的方法解决)
+				var pageWidth=document.documentElement.clientWidth;
+				//console.log(pageWidth);
+				if((mx+rmWidth)<pageWidth)
+				{
+					rm.style.left=mx+"px";
+					rm.style.top=my+"px";
+				}
+				else
+				{
+					rm.style.right=mx+"px";
+					rm.style.top=my+"px";
+				}
+				
+				//3.显示右键菜单
+				rm.style.display="block";
+				
+				//阻止默认的右键菜单显示
+				return false;
+			};
+				
+			//不需要积隐藏右键菜单
+			document.documentElement.onclick=function () {
+				var rm=document.getElementById("divMenu");
+				if(rm){
+					//因为在下次清空divMenu前有所转移，所以这里不需要转移。
+					// //删除前恢复按钮到下方隐藏状态
+					// var content=document.getElementsByClassName('content')[0];
+					// for(var bti=0;bti<divMenu.childNodes.length;bti++){
+					// 	var bt=divMenu.childNodes[bti];
+					// 	if(bt.tagName=="BUTTON"){
+					// 		content.appendChild(bt);
+					// 		bt.style.display='none';
+					// 	}
+					// }
+					rm.style.display="none";
+				}
+			}
+		}
+
 
 		function ifKeyDown() {
 			if (page == 0) {
@@ -462,6 +695,12 @@ for(var i = 0 ; i < imgs.length ; i ++){
 						event.returnValue = false; //不输出回车,会导致其他按钮点不了，因此应该放这
 					}
 				}
+				
+				if (event.keyCode == 27) { //去除右键的菜单
+					var rm=document.getElementById("divMenu");
+					if(rm) rm.style.display="none";
+				}
+
 				if (event.altKey == 1) {
 					if (altActive < 0) {
 						altActive = 0;
@@ -652,6 +891,8 @@ for(var i = 0 ; i < imgs.length ; i ++){
 						$('leftbt').style.color='#ff0000';
 						$('leftbt').innerHTML='ctrl';
 						for (var buttonid in buttonInfo) {
+							if ($(buttonid).className=="bt2")
+								$(buttonid).style.width="118px";
 							if (buttonInfo[buttonid][3])
 								$(buttonid).innerHTML = buttonInfo[buttonid][2] + "<sup>" + buttonInfo[buttonid][3] + "</sup>";
 						} //增加后缀
@@ -670,8 +911,8 @@ for(var i = 0 ; i < imgs.length ; i ++){
 			if(mystr=="") window.open(engines[engine][0]);
 			else{
 				mystr = encodeURIComponent(mystr);//encodeURI
-				console.log(engine);
-				console.log(engines[engine]);
+				// console.log(engine);
+				// console.log(engines[engine]);
 				var adress = engines[engine][0] + engines[engine][1] + mystr;
 				window.open(adress);
 			}
@@ -698,6 +939,7 @@ for(var i = 0 ; i < imgs.length ; i ++){
 		}
 
 		function changeReg() {
+			//因为段落翻译的按钮取消，本函数不再用到。
 			if ($("regbdfanyi").style.display == 'none') {
 				$("regbdfanyi").style.display = '';
 				$("regggfanyi").style.display = '';
@@ -748,6 +990,8 @@ for(var i = 0 ; i < imgs.length ; i ++){
 		}
 
 		function clearAll() {
+			$('in_div').style.visibility='hidden';//左侧工具不显示
+			DB = document.body.innerHTML;//记录当前网页
 			document.body.innerHTML = "";
 			page = 1;
 			setTimeout('document.body.ondblclick=function(){recover();};', 10);
@@ -858,6 +1102,8 @@ for(var i = 0 ; i < imgs.length ; i ++){
 		}
 
 		function lockall() {
+			$('in_div').style.visibility='hidden';//左侧工具不显示
+			DB = document.body.innerHTML;//记录当前网页
 			document.body.innerHTML = lockhtml;
 			page = 2;
 			setTimeout("$('timeline').innerHTML=timestr(); setIntervalFun = setInterval('judgeTimeLine()', 1000 * 1);", 100);
@@ -876,6 +1122,7 @@ for(var i = 0 ; i < imgs.length ; i ++){
 		}
 
 		function showother() {
+			//因为部分按钮有右键菜单的功能，所以此功能弃用。
 			var ids = ["regfybr", "regbdfanyi", "bingfy", "youdao", "fqbr", "google", "wikien", "wikizh",
 				"GoogleScholar", "youtube", "zhiwang","caiyun","WolframAlpha",
 			];
@@ -892,6 +1139,17 @@ for(var i = 0 ; i < imgs.length ; i ++){
 			}
 			$('showother').innerText = textdic[$('showother').innerText.slice(0,4)];
 		}
+
+		function exchange(id_1,id_2){
+			id_1=$(id_1);
+			id_2=$(id_2);
+			var newNode = document.createElement('div');
+			id_2.parentNode.insertBefore(newNode,id_2);
+			id_1.parentNode.insertBefore(id_2,id_1);
+			newNode.parentNode.insertBefore(id_1,newNode);
+			newNode.parentNode.removeChild(newNode);
+		}
+
 	</script>
 </body>
 
